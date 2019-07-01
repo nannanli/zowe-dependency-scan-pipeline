@@ -1,0 +1,1 @@
+https://raw.githubusercontent.com/zowe/zowe-install-packaging/stagings/v2.x-alpha/manifest.json.template

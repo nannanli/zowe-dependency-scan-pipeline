@@ -7,7 +7,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0
  *
- * Copyright IBM Corporation 2018, 2019
+ * Copyright Contributors to the Zowe Project.
  */
 
 
@@ -42,7 +42,7 @@ node('zowe-dependency-scanning') {
     timeout       : [time: 500, unit: 'MINUTES'],
     isSkippable   : false,
     environment   : [
-      OWASP_CLI_BIN_PATH      :"${OWASP_CHECK_HOME}/bin",
+      OWASP_CLI_BIN_PATH      : "${OWASP_CHECK_HOME}/bin",
       APP_OWASP_SCAN          : true
     ],
     operation     : {
@@ -50,6 +50,7 @@ node('zowe-dependency-scanning') {
             sh "npm set registry ${lib.Constants.DEFAULT_NPM_PRIVATE_REGISTRY_INSTALL}"
             sh "echo always-auth=true >> ~/.npmrc"
             sh "cp ~/.npmrc resources/private_npmrc/.npmrc"
+            sh "cp -f zowe-manifest-source.txt resources/zowe-manifest-source.txt"
             sh "yarn install && yarn build"
             sh "node lib/index.js"
             sh "cd build && zip -r logs.zip logs/"
