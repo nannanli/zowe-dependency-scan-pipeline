@@ -49,6 +49,7 @@ node('zowe-dependency-scanning') {
             sh "yarn install && yarn build"
             sh "node lib/index.js"
             sh "cd build && zip -r logs.zip logs/"
+            sh "cd build && zip -r reports.zip license_reports/"
         }
     }
   )
@@ -62,7 +63,7 @@ node('zowe-dependency-scanning') {
                 allowMissing: true,
                 alwaysLinkToLastBuild: true,
                 keepAll: true,
-                reportDir: "reports",
+                reportDir: "license_reports",
                 reportFiles: "${PENDING_APPROVAL_REPORT_NAME}"
             ])
           }
@@ -78,7 +79,7 @@ node('zowe-dependency-scanning') {
                 allowMissing: true,
                 alwaysLinkToLastBuild: true,
                 keepAll: true,
-                reportDir: "reports",
+                reportDir: "license_reports",
                 reportFiles: "${MARKDOWN_REPORT_NAME}"
             ])
           }
@@ -90,6 +91,7 @@ node('zowe-dependency-scanning') {
       stage: {
           dir("${DEPENDENCY_SCAN_HOME}/build") {
             archiveArtifacts artifacts: "logs.zip"
+            archiveArtifacts artifacts: "reports.zip"
           }
       }
   )
